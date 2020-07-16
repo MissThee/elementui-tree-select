@@ -1,5 +1,5 @@
 <template>
-    <el-select @blur="selectBlurHandler" filterable :filter-method="TreeSelectFilter" v-model="selectedText" placeholder="请选择所属单位" style="width: 100%;" ref="selectReport">
+    <el-select @blur="selectBlurHandler" filterable :filter-method="TreeSelectFilter" v-model="selectedText" :placeholder="placeholder" style="width: 100%;" ref="selectReport">
         <el-option disabled style="width: 100%;height:245px;overflow: auto;background-color:#fff" value="">
             <el-tree :filter-node-method="filterNode" :data="treeData" :props="props" :node-key="nodeKey" default-expand-all :expand-on-click-node="false" highlight-current @node-click="handleNodeClick" ref="InnerTree"/>
         </el-option>
@@ -7,16 +7,17 @@
 </template>
 
 <script>
+    //elementui相关依赖在App.vue中全局引入
     export default {
         name: 'TreeSelect',
         props: {
             value: [String, Number],//组件绑定值
-            //从外部传入树形组件的数据、配置参数，组件暂时可设置这些内容：
+            //从外部传入树形组件的数据、配置参数，组件暂时可设置这些内容，按需要自行增减就可以了：
             treeData: {type: Array, default: []},//树形组件数据
             props: {type: Object, default: {children: 'children', label: 'label'}},//树形组件属性设置
             nodeKey: {type: String, default: undefined},//树形组件nodeKey（必须）
+            placeholder: {type: String, default: ''}//组件空白文字
         },
-
         data() {
             return {
                 selectedId: undefined,
@@ -24,10 +25,10 @@
             };
         },
         created() {
+            //检查是否设置了nodeKey，之后的赋值逻辑需要nodeKey才能完成
             if (this.nodeKey === undefined) {
                 throw 'TreeSelect Must Use "nodeKey"!';
             }
-
         },
         mounted() {
             this.setSelectShowTextBeyKey(this.value);
@@ -51,17 +52,13 @@
                 this.selectedText = node[this.props.label];
                 this.$refs.selectReport.blur();
                 this.$emit('input', node[this.nodeKey]);
-                // this.value=node[this.nodeKey]
             },
-            // //设置组件初始值
-            // setCurrentKey(key) {
-            //   this.$refs.InnerTree.setCurrentKey(key);
-            //   let currentNode = this.$refs.InnerTree.getCurrentNode();
-            //   this.selectedText = currentNode[this.props.label];
-            // },
-            //使用nodeKey获取节点，给组件设置显示的值
+            //使用绑定的值，给内部树形组件设置选中的节点，再给select组件设置显示的文字
+            //这个方法首次初始化组件时调用一次mounted中；之后每次选中节点后调用一次watch中。
             setSelectShowTextBeyKey(key) {
+                //设置tree选中节点
                 this.$refs.InnerTree.setCurrentKey(key);
+                //拿到节点，将节点名字赋值给select组件
                 let currentNode = this.$refs.InnerTree.getCurrentNode();
                 if (currentNode !== null) {
                     this.selectedText = currentNode[this.props.label];

@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div style="width:250px;margin: auto">
-            <tree-select v-model="testValue" :treeData="unitTreeData" :props="{ children: 'children', label: 'label' }" nodeKey="id"/>
+            <tree-select v-model="testValue" placeholder="请选择" :treeData="unitTreeData" :props="{ children: 'children', label: 'label' }" nodeKey="id"/>
             <div>选中的节点值：{{testValue}}</div>
         </div>
         <a href="https://github.com/MissThee/elementui-tree-select">查看源码https://github.com/MissThee/elementui-tree-select</a>
@@ -9,8 +9,8 @@
 </template>
 
 <script>
-
-    import TreeSelect from "./components/TreeSelect";
+    const TreeSelect = () => import(/* webpackChunkName: "TreeSelect" */ "./components/TreeSelect")
+    // import TreeSelect from "./components/TreeSelect";
 
     export default {
         name: 'App',
@@ -71,11 +71,7 @@
 
 <style>
     #app {
-        font-family: Avenir, Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
         text-align: center;
-        color: #2c3e50;
         margin-top: 60px;
     }
 </style>

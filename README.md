@@ -1,29 +1,8 @@
-# elementui-tree-select
+# 简介
+> 使用 element-ui v2.13.2 中 select、tree 组件组合
+> 预览地址 [https://missthee.github.io/elementui-tree-select/dist/index.html](https://missthee.github.io/elementui-tree-select/dist/index.html)
 
-## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Run your tests
-```
-npm run test
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

@@ -15,7 +15,7 @@
             value: [String, Number],//组件绑定值
             //从外部传入树形组件的数据、配置参数，组件暂时可设置这些内容，按需要自行增减就可以了：
             treeData: {type: Array, default: []},//树形组件数据
-            props: {type: Object, default: {children: 'children', label: 'label'}},//树形组件属性设置
+            props: {type: Object, default: {}},//树形组件属性设置
             nodeKey: {type: String, default: undefined},//树形组件nodeKey（必须）
             placeholder: {type: String, default: ''},//组件建空白文字
             size: String,//select组件尺寸
@@ -34,6 +34,14 @@
             //检查是否设置了nodeKey，之后的赋值逻辑需要nodeKey才能完成
             if (this.nodeKey === undefined) {
                 throw 'TreeSelect Must Use "nodeKey"!';
+            }
+            //给props对象中的其余值赋默认值
+            if (Object.prototype.toString.call(this.props) === '[object Object]') {
+                this.props.children = this.props.children || 'children';
+                this.props.label = this.props.label || 'label';
+                this.props.value = this.props.value || 'value';
+            }else{
+                throw 'Param "props" Must Be Object!';
             }
         },
         methods: {

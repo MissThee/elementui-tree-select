@@ -44,6 +44,9 @@
                 throw 'Param "props" Must Be Object!';
             }
         },
+        mounted() {
+            this.setSelectShowTextByKey(this.value)
+        },
         methods: {
             //失去焦点重置筛选
             selectBlurHandler() {

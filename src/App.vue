@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <div style="width:250px;margin: auto">
+        <div style="width:250px;margin: 80px auto 0">
             <tree-select
                     v-model="testValue"
                     clearable
@@ -9,9 +9,17 @@
                     :props="{ children: 'children', label: 'label' }"
                     nodeKey="id"
             />
-            <div>选中的节点值：{{testValue}}</div>
+            <div style="color:#999;margin:10px 0 0 0">
+                <div>当前选中节点id：<span style="color:#666d">{{testValue?testValue:'（尚未选择）'}}</span></div>
+                <div>组件绑定的数据：</div>
+                <div style="height: 400px;border:1px solid #ccc;overflow: auto">
+                    <pre style="font-family:Arial,serif">{{unitTreeData}}</pre>
+                </div>
+            </div>
         </div>
-        <a href="https://github.com/MissThee/elementui-tree-select">查看源码https://github.com/MissThee/elementui-tree-select</a>
+        <div style="text-align: center">
+            <a href="https://github.com/MissThee/elementui-tree-select">查看源码：https://github.com/MissThee/elementui-tree-select</a>
+        </div>
     </div>
 </template>
 
@@ -77,8 +85,5 @@
 </script>
 
 <style>
-    #app {
-        text-align: center;
-        margin-top: 60px;
-    }
+
 </style>

@@ -5,12 +5,13 @@
         </el-option>
     </el-select>
 </template>
-
 <script>
-    //elementui相关依赖在App.vue中全局引入
-
+    // import ElSelect from 'element-ui/lib/select';
+    // import ElOption from 'element-ui/lib/option';
+    // import ElTree from 'element-ui/lib/tree';
     export default {
         name: 'TreeSelect',
+        // components:{ElSelect,ElOption,ElTree},
         props: {
             value: [String, Number],//组件绑定值
             //从外部传入树形组件的数据、配置参数，组件暂时可设置这些内容，按需要自行增减就可以了：
@@ -33,7 +34,7 @@
         created() {
             //检查是否设置了nodeKey，之后的赋值逻辑需要nodeKey才能完成
             if (this.nodeKey === undefined) {
-                throw 'TreeSelect Must Use "nodeKey"!';
+                throw 'tree-select Must Use "nodeKey"!';
             }
             //给props对象中的其余值赋默认值
             if (Object.prototype.toString.call(this.props) === '[object Object]') {
@@ -137,9 +138,12 @@
         background: #d0d0d0;
     }
 
-    /*解决当树的高度小于下拉菜单最大高度时，最后一个节点收起后，将菜单撑出一点点滚动条的问题*/
-    /*去除此样式，收起三个根节点，会出现滚动条*/
+    /*解决当树的高度小于下拉菜单最大高度时，最后一个节点收起后，菜单仍显示一点点滚动条的问题*!*/
+    /*若去除此样式，收起三个根节点，会出现滚动条*/
     /deep/ .el-tree-node__label {
         line-height: 0;
     }
+</style>
+<style scoped>
+
 </style>

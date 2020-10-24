@@ -1,3 +1,8 @@
+const path = require('path');
+
+function resolve(name) {
+    return path.resolve(__dirname,name)
+}
 module.exports = {
     publicPath: './',
     configureWebpack: {

@@ -1,19 +1,28 @@
 {
-  "name": "elementui-tree-select",
-  "version": "0.1.0",
-  "private": true,
+  "name": "element-ui-tree-select-beta",
+  "version": "0.0.4",
+  "private": false,
+  "main": "dist/tree-select.js",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "package": "webpack",
+    "publish": "npm publish",
+    "unpublish": "npm unpublish --force"
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "element-ui": "^2.13.2",
-    "vue": "^2.6.11"
+    "vue": "^2.6.12",
+    "element-ui": "^2.13.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.4.0",
     "@vue/cli-service": "^4.4.0",
-    "vue-template-compiler": "^2.6.11"
+    "css-loader": "^5.0.0",
+    "file-loader": "^6.1.1",
+    "style-loader": "^2.0.0",
+    "vue-loader": "^15.9.3",
+    "vue-template-compiler": "^2.6.12",
+    "webpack-cli": "^4.1.0"
   }
 }

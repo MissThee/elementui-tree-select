@@ -24,8 +24,9 @@
 </template>
 
 <script>
-    const TreeSelect = () => import(/* webpackChunkName: "TreeSelect" */ "./components/TreeSelect")
-    // import TreeSelect from "./components/TreeSelect";
+
+    const TreeSelect = () => import(/* webpackChunkName: "tree-select" */ "./components/tree-select/tree-select")
+    // import tree-select from "./components/tree-select";
 
     export default {
         name: 'App',
@@ -84,6 +85,6 @@
     }
 </script>
 
-<style>
+<style scoped>
 
 </style>

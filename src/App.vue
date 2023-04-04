@@ -9,7 +9,7 @@
             </div>
             <div class="back-board">
                 <div class="title">单选:(可选所有节点)</div>
-                <tree-select :data="treeData" v-model="selectValueSingle" clearable :props="{id:'id',name:'name',children:'children'}"/>
+                <tree-select :data="treeData" v-model="selectValueSingle" clearable filterable :props="{id:'id',name:'name',children:'children'}"/>
                 <div style="color:#999;">
                     <span>已选id：</span>
                     <span style="color:#666">{{ selectValueSingle }}</span>
@@ -19,7 +19,7 @@
                 </div>
                 <div style="border-bottom: 1px solid #ccc;margin:60px 0 10px"/>
                 <div class="title">单选:(仅选叶子节点，leafOnly)</div>
-                <tree-select :data="treeData" v-model="selectValueSingleLeafOnly" clearable leaf-only/>
+                <tree-select :data="treeData" v-model="selectValueSingleLeafOnly" clearable filterable leaf-only/>
                 <div style="color:#999;">
                     <span>已选id：</span>
                     <span style="color:#666">{{ selectValueSingleLeafOnly }}</span>
@@ -31,7 +31,7 @@
             </div>
             <div class="back-board">
                 <div class="title">多选:（仅选叶子节点，强制leafOnly）</div>
-                <tree-select :data="treeData" v-model="selectValueMulti" clearable multiple/>
+                <tree-select :data="treeData" v-model="selectValueMulti" clearable filterable multiple/>
                 <div style="color:#999;margin:10px 0 0 0">
                     <span>已选id：</span>
                     <span style="color:#666">{{ selectValueMulti }}</span>
@@ -121,6 +121,17 @@ export default {
                 }, {
                     id: 43,
                     name: '二级 4-3'
+                }]
+            }, {
+                id: 5,
+                name: 'A',
+                children: [{
+                    id: 51,
+                    name: 'B',
+                    children: [{
+                        id: 511,
+                        name: 'C'
+                    }]
                 }]
             }]
         }

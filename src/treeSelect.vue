@@ -2,6 +2,8 @@
     <el-select ref="selectRef"
                v-model="selectedIds"
                v-bind="$attrs"
+               :filter-method="selectFilterMethod"
+               @visible-change="selectVisibleChangeHandler"
                @change="selectChangeHandler">
         <el-option disabled class="tree-option" :value="null">
             <el-tree :data="treeData"
@@ -14,6 +16,7 @@
                          label:commonProps.name,
                          children:commonProps.children
                      }"
+                     :filterNodeMethod="filterNodeMethod"
                      :show-checkbox="multiple"
                      default-expand-all
                      :highlight-current="!multiple"
@@ -28,7 +31,8 @@
                    :key="item[commonProps.id]"
                    :value="item[commonProps.id]"
                    :label="item[commonProps.name]"
-                   v-show="false"/>
+                   v-show="false"
+        />
     </el-select>
 </template>
 <script>
@@ -57,27 +61,6 @@ export default {
         lastHighlightNodeId: undefined,
     }),
     watch: {
-        value: {
-            handler() {
-                if (this.multiple) {
-                    // 多选
-                    this.selectedIds = JSON.parse(JSON.stringify(this.value))
-                    this.$refs.treeRef.setCheckedKeys(this.value.filter(id => this.plainData.find(item => item.id === id)?.isLeaf))
-                } else {
-                    // 单选
-                    this.selectedIds = this.value
-                    if (this.leafOnly && !this.plainData.find(e => e[this.commonProps.id] === this.value).isLeaf) {
-                        this.lastHighlightNodeId = undefined
-                        this.$refs.treeRef.setCurrentKey(undefined)
-                    } else {
-                        this.lastHighlightNodeId = this.value || undefined
-                        this.$refs.treeRef.setCurrentKey(this.value || undefined)
-                    }
-                }
-            },
-            deep: true,
-            immediate: true
-        },
         data: {
             handler() {
                 this.treeData = this.data
@@ -85,7 +68,35 @@ export default {
             },
             deep: true,
             immediate: true
-        }
+        },
+        value: {
+            handler() {
+                if (this.multiple) {
+                    // 多选
+                    this.selectedIds = JSON.parse(JSON.stringify(this.value))
+                    this.$nextTick(() => {
+                        this.$refs.treeRef.setCheckedKeys(this.value.filter(id => this.plainData.find(item => item.id === id)?.isLeaf))
+                    })
+                } else {
+                    // 单选
+                    this.selectedIds = this.value
+                    if (this.leafOnly && !this.plainData.find(e => e[this.commonProps.id] === this.value)?.isLeaf) {
+                        this.lastHighlightNodeId = undefined
+                        this.$nextTick(() => {
+                            this.$refs.treeRef.setCurrentKey(undefined)
+                        })
+                    } else {
+                        this.lastHighlightNodeId = this.value || undefined
+                        this.$nextTick(() => {
+                            this.$refs.treeRef.setCurrentKey(this.value || undefined)
+                        })
+                    }
+                }
+            },
+            deep: true,
+            immediate: true
+        },
+
     },
     computed: {
         commonProps() {
@@ -151,6 +162,24 @@ export default {
             setTimeout(() => {
                 this.$refs.selectRef.broadcast('ElSelectDropdown', 'updatePopper');
             }, 10)
+        },
+        // 筛选功能相关
+        selectFilterMethod(val) {
+            this.$refs.treeRef.filter(val)
+        },
+        filterNodeMethod(val, data) {
+            if (!val) {
+                return true
+            }
+            if (String(data.name).toLowerCase().includes(String(val).toLowerCase())) {
+                return true
+            }
+            return false
+        },
+        selectVisibleChangeHandler() {
+            setTimeout(() => {
+                this.$refs.treeRef.filter()
+            }, 100)
         }
     }
 }
@@ -188,4 +217,11 @@ export default {
     width: 100%;
 }
 
+/deep/ .el-select-dropdown__list > * {
+    display: none;
+}
+
+/deep/ .el-select-dropdown__list > *:first-child {
+    display: block;
+}
 </style>

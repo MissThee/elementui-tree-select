@@ -1,6 +1,6 @@
 {
   "name": "element-ui-tree-select-beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "main": "dist/tree-select.js",
   "scripts": {

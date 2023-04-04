@@ -1,6 +1,6 @@
 {
   "name": "element-ui-tree-select-beta",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "private": false,
   "main": "dist/tree-select.js",
   "scripts": {
@@ -13,7 +13,7 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.12",
-    "element-ui": "^2.13.2"
+    "element-ui": "^2.15.13"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.4.0",

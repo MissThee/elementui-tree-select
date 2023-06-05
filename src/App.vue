@@ -15,7 +15,8 @@
                     <span style="color:#666">{{ selectValueSingle }}</span>
                 </div>
                 <div>
-                    <el-button type="primary" plain @click="selectValueSingle=111">选中'三级1-1-1'</el-button>
+                  <el-button type="primary" plain @click="selectValueSingle=111">选中'三级1-1-1'</el-button>
+                  <el-button type="primary" plain @click="selectValueSingle=1">选中'一级1'</el-button>
                 </div>
                 <div style="border-bottom: 1px solid #ccc;margin:60px 0 10px"/>
                 <div class="title">单选:(仅选叶子节点，leafOnly)</div>
@@ -26,7 +27,7 @@
                 </div>
                 <div>
                     <el-button type="primary" plain @click="selectValueSingleLeafOnly=111">选中'三级1-1-1'</el-button>
-                    <el-button type="danger" plain @click="selectValueSingleLeafOnly=1">选中'三级1'</el-button>
+                    <el-button type="danger" plain @click="selectValueSingleLeafOnly=1">选中'一级1'</el-button>
                 </div>
             </div>
             <div class="back-board">

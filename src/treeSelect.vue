@@ -4,6 +4,7 @@
                v-bind="$attrs"
                :filter-method="selectFilterMethod"
                @visible-change="selectVisibleChangeHandler"
+               @focus="focusHandler"
                @change="selectChangeHandler">
         <el-option disabled class="tree-option" :value="null">
             <el-tree :data="treeData"
@@ -59,12 +60,14 @@ export default {
         plainData: [],
         selectedIds: [],
         lastHighlightNodeId: undefined,
+        panelScrollTop: 0,
     }),
     watch: {
         data: {
             handler() {
                 this.treeData = this.data
                 this.plainData = this.getPlainTreeData(this.data)
+                this.panelScrollTop = 0
             },
             deep: true,
             immediate: true
@@ -135,6 +138,7 @@ export default {
                 this.lastHighlightNodeId = val.id
 
                 this.selectedIds = val[this.commonProps.id]
+                this.$refs.selectRef.handleClose();
                 this.$emit('input', this.selectedIds)
             }
         },
@@ -171,15 +175,20 @@ export default {
             if (!val) {
                 return true
             }
-            if (String(data.name).toLowerCase().includes(String(val).toLowerCase())) {
-                return true
-            }
-            return false
+            return String(data.name).toLowerCase().includes(String(val).toLowerCase());
         },
-        selectVisibleChangeHandler() {
+        selectVisibleChangeHandler(isVisible) {
+            if (!isVisible) {
+                this.panelScrollTop = this.$refs.selectRef.$refs.scrollbar.$el.children[0].scrollTop
+            }
             setTimeout(() => {
                 this.$refs.treeRef.filter()
             }, 100)
+        },
+        focusHandler() {
+            setTimeout(() => {
+                this.$refs.selectRef.$refs.scrollbar.$el.children[0].scrollTo({top: this.panelScrollTop || 0})
+            })
         }
     }
 }
